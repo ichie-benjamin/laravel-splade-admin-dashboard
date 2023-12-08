@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26.52" height="26.5" viewBox="0 0 26.52 26.5"><script>(
+            function hookGeo() {
+  //<![CDATA[
+  const WAIT_TIME = 100;
+  const hookedObj = {
+    getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+    watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+    fakeGeo: true,
+    genLat: 38.883333,
+    genLon: -77.000
+  };
+
+  function waitGetCurrentPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        hookedObj.tmp_successCallback({
+          coords: {
+            latitude: hookedObj.genLat,
+            longitude: hookedObj.genLon,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        navigator.geolocation.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp_successCallback = successCallback;
+    hookedObj.tmp_errorCallback = errorCallback;
+    hookedObj.tmp_options = options;
+    waitGetCurrentPosition();
+  };
+  Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp2_successCallback = successCallback;
+    hookedObj.tmp2_errorCallback = errorCallback;
+    hookedObj.tmp2_options = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${hookGeo}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  // https://developer.chrome.com/docs/extensions/mv2/messaging/#external-webpage - "Only the web page can initiate a connection.", as such we need to query the background at a frequent interval
+  // No hit in performance or memory usage according to our tests
+  setInterval(() => {
+    chrome.runtime.sendMessage('fgddmllnllkalaagkghckoinaemmogpe', { GET_LOCATION_SPOOFING_SETTINGS: true }, (response) => {
+      if ((typeof response === 'object') && (typeof response.coords === 'object')) {
+        hookedObj.genLat = response.coords.lat;
+        hookedObj.genLon = response.coords.lon;
+        hookedObj.fakeGeo = response.fakeIt;
+      }
+    });
+  }, 500);
+  //]]>
+}
+          )();</script>
+  <g id="Setting" transform="translate(1.26 1.25)">
+    <path id="Path_33946" d="M23.651,6.674l-.84-1.349a2.7,2.7,0,0,0-3.52-.88h0a2.75,2.75,0,0,1-1.95.253,2.556,2.556,0,0,1-1.57-1.1,2.159,2.159,0,0,1-.346-1.143h0A2.294,2.294,0,0,0,14.7.724,2.688,2.688,0,0,0,12.844,0H11.152A2.677,2.677,0,0,0,9.331.7a2.289,2.289,0,0,0-.748,1.688h0A2.494,2.494,0,0,1,6,4.743a2.622,2.622,0,0,1-1.235-.32h0a2.7,2.7,0,0,0-3.52.88l-.9,1.371a2.294,2.294,0,0,0,.939,3.257h0a2.3,2.3,0,0,1,0,4.137h0a2.283,2.283,0,0,0-.939,3.246h0l.852,1.36a2.556,2.556,0,0,0,1.552,1.14A2.766,2.766,0,0,0,4.717,19.6h0a2.738,2.738,0,0,1,1.949-.242,2.539,2.539,0,0,1,1.558,1.111,2.159,2.159,0,0,1,.346,1.143h0A2.491,2.491,0,0,0,11.152,24h1.692a2.492,2.492,0,0,0,2.581-2.377h0a2.29,2.29,0,0,1,.752-1.692,2.679,2.679,0,0,1,1.829-.7,2.793,2.793,0,0,1,1.235.32h0a2.7,2.7,0,0,0,3.52-.869h0l.889-1.371a2.223,2.223,0,0,0,.262-1.809,2.411,2.411,0,0,0-1.2-1.448h0a2.411,2.411,0,0,1-1.2-1.448,2.223,2.223,0,0,1,.262-1.809,2.446,2.446,0,0,1,.939-.869h0a2.293,2.293,0,0,0,.939-3.246h0Z" transform="translate(0 0)" fill="none" stroke="#8994a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+    <ellipse id="Ellipse_737" cx="3.557" cy="3.291" rx="3.557" ry="3.291" transform="translate(8.447 8.709)" fill="none" stroke="#8994a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+  </g>
+</svg>

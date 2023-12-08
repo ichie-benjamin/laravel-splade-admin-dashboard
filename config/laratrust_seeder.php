@@ -12,23 +12,10 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'superadmin' => [
-            'users' => 'c,r,u,d',
-            'settings' => 'r,u',
-        ],
-        'admin' => [
-            'users' => 'c,r,u,d',
-            'settings' => 'r,u',
-        ],
-        'user' => [
-            'profile' => 'r,u',
-        ],
+        'superadmin' => [],
+        'admin' => [],
+        'user' => [],
     ],
 
-    'permissions_map' => [
-        'c' => 'create',
-        'r' => 'read',
-        'u' => 'update',
-        'd' => 'delete',
-    ],
+    'permissions_map' => [],
 ];

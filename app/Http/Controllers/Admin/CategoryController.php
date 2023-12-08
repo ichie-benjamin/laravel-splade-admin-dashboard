@@ -64,6 +64,7 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
+
     private function validateData(Request $request, $id = null): array
     {
         $rules = [

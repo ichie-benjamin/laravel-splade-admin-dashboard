@@ -1,28 +1,30 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl dark:text-white text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
 
 
-        @foreach(['','','',''] as $i)
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
-                <p class="font-light text-xs text-gray-500 dark:text-white">Statistics</p>
-                <h5 class="mb-4 text-2xl- font-semibold tracking-tight dark:text-white">
-                    Total Bookings
-                </h5>
-                <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    350k
-                </h5>
-                <p class="dark:text-white font-light text-blue-800">+18%</p>
-            </div>
-        @endforeach
+    <x-splade-lazy>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
 
+            @foreach($stats as $i)
+                <div class="max-w-sm p-6 bg-white border
+            flex justify-between
+            border-gray-200 rounded-xl shadow dark:bg-gray-800
+            dark:border-gray-700">
+                    <div class="">
+                        <p class="mb-4 text-2xl-
+                   font-light tracking-tight dark:text-white">
+                            {{ $i['title'] }}
+                        </p>
+                        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ $i['value'] }}
+                        </h5>
+                    </div>
+                    <img src="{{ $i['icon'] }}" />
+                </div>
+            @endforeach
 
-    </div>
+        </div>
+    </x-splade-lazy>
+
 
 
     <div class=" mb-5 bg-white rounded-xl shadow dark:bg-gray-800">
@@ -102,97 +104,105 @@
     </div>
 
 
-    <div class="grid grid-cols-3 gap-4 mb-4">
 
+    <x-splade-lazy>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="w-full max-w-md- p-4- bg-white border border-gray-200 rounded-xl shadow sm:p-8- dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex sm:p-4 p-4 items-center justify-between mb-4
+            border-b border-gray-200 dark:border-gray-700 pb-2">
+                    <h5 class="text-xl font-bold leading-none text-gray-900
+                dark:text-white">Recent posts</h5>
+                    {{--                <a href="#" class="text-sm font-medium text-blue-600--}}
+                    {{--                hover:underline dark:text-blue-500">--}}
+                    {{--                    View all--}}
+                    {{--                </a>--}}
+                </div>
+                <div class="flow-root sm:px-4 px-4">
 
-        <div class="w-full max-w-md p-4- bg-white border border-gray-200 rounded-xl shadow sm:p-8- dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex sm:p-4 p-4 items-center justify-between mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
-                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Recent Providers</h5>
-                <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                    View all
-                </a>
-            </div>
-            <div class="flow-root sm:px-4 px-4">
-                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @foreach(['','','','','',''] as $i)
-                        <li class="py-2 sm:py-3">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png" alt="Neil image">
-                                </div>
-                                <div class="flex-1 min-w-0 ms-4">
-                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                        Neil Sims
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                        email@windster.com
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-        <div class="w-full max-w-md p-4- bg-white border border-gray-200 rounded-xl shadow sm:p-8- dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex sm:p-4 p-4 items-center justify-between mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
-                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Recent Customers</h5>
-                <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                    View all
-                </a>
-            </div>
-            <div class="flow-root sm:px-4 px-4">
-                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @foreach(['','','','','',''] as $i)
-                        <li class="py-2 sm:py-3">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png" alt="Neil image">
-                                </div>
-                                <div class="flex-1 min-w-0 ms-4">
-                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                        Neil Sims
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                        email@windster.com
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-        <div class="w-full max-w-md p-4- bg-white border border-gray-200 rounded-xl shadow sm:p-8- dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex sm:p-4 p-4 items-center justify-between mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
-                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Recent Bookings</h5>
-                <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                    View all
-                </a>
-            </div>
-            <div class="flow-root sm:px-4 px-4">
-                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @foreach(['','','','','',''] as $i)
-                        <li class="py-2 sm:py-3">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png" alt="Neil image">
-                                </div>
-                                <div class="flex-1 min-w-0 ms-4">
-                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                        Neil Sims
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                        email@windster.com
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Plan
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Date
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($recent['recent_posts'] as $i)
+                                <tr class="bg-white border-b dark:bg-gray-800
+                        dark:border-gray-700">
+                                    <td class="px-6 py-4">
+                                        {{ $i->name }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $i->plan?->title }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $i->created_at }}
+                                    </td>
+                                </tr>
+                            @endforeach
 
-    </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full max-w-md- p-4- bg-white border border-gray-200 rounded-xl shadow sm:p-8- dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex sm:p-4 p-4 items-center justify-between mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+                    <h5 class="text-xl font-bold leading-none text-gray-900
+                dark:text-white">Popular posts</h5>
+
+                </div>
+                <div class="flow-root sm:px-4 px-4">
+
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Plan
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Date
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($recent['popular_posts'] as $i)
+                                <tr class="bg-white border-b dark:bg-gray-800
+                        dark:border-gray-700">
+                                    <td class="px-6 py-4">
+                                        {{ $i->name }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $i->plan?->title }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $i->created_at }}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </x-splade-lazy>
+
 
 </x-app-layout>

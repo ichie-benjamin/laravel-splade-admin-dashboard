@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call(CategoriesSeeder::class);
-        $this->call(SubCategorySeeder::class);
         $this->call(LaratrustSeeder::class);
+        $this->call(PermissionSeeder::class);
 
         if(User::count() < 1){
             $user = \App\Models\User::factory()->create([

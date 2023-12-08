@@ -5,98 +5,44 @@
             'url' => route('admin.dashboard'),
             'route' => 'admin.dashboard',
             'text' => 'Dashboard',
-            'active' => 'admin.dashboard',
-            'icon' => 'home',
-        ],[
-            'route' => 'admin.dashboard',
-            'text' => 'Services',
-             'active' => 'admin.dashboard',
-            'icon' => 'category',
-            'submenu' => [
-            [
-                'url' => route('admin.categories.index'),
-                'route' => 'admin.categories.index',
-                'text' => 'Categories',
-                'active' => 'admin.categories.index',
-                'icon' => 'category',
-            ],
-            [
-                  'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'text' => 'Sub Categories',
-            'active' => 'admin.sub_categories.index',
-            'icon' => 'sub_category',
-            ],
-          [
-            'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'active' => 'admin.sub_categories.index',
-            'text' => 'Services',
-            'icon' => 'cog',
-        ],[
-            'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'active' => 'admin.sub_categories.index',
-            'text' => 'Sub Service',
-            'icon' => 'cog',
+            'icon_img' => asset('images/icons/home.svg'),
         ],
-       ]
-        ],[
-            'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'active' => 'admin.sub_categories.index',
-            'text' => 'Add Product',
-            'icon' => 'plus',
-        ],[
-            'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'active' => 'admin.sub_categories.index',
 
-            'text' => 'Booking',
-            'icon' => 'clipboard-list',
-        ],[
-            'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'text' => 'Provider List',
-            'active' => 'admin.sub_categories.index',
-
-            'icon' => 'sub_category',
-        ],[
-            'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'text' => 'Pending Provider',
-            'active' => 'admin.sub_categories.index',
-            'icon' => 'list',
-        ],[
-            'url' => route('admin.sub_categories.index'),
-            'route' => 'admin.sub_categories.index',
-            'text' => 'Provider Documents',
-            'active' => 'admin.sub_categories.index',
-            'icon' => 'clipboard-list',
-        ],[
-            'url' => route('admin.roles.index'),
-            'route' => 'admin.roles.index',
-            'text' => 'Roles',
-            'active' => 'admin.roles.index',
-            'icon' => 'cog',
-        ],[
-            'url' => route('admin.permissions.index'),
-            'route' => 'admin.permissions.index',
-            'text' => 'Permissions',
-            'active' => 'admin.permissions.index',
-            'icon' => 'cog',
+        [
+            'url' => route('admin.posts.index'),
+            'route' => 'admin.posts.index',
+            'text' => 'Posts',
+            'icon_img' => asset('images/icons/items.svg'),
+        ],
+        [
+            'url' => route('admin.categories.index'),
+            'route' => 'admin.categories.index',
+            'text' => 'Categories',
+            'icon_img' => asset('images/icons/document.svg'),
         ],[
             'url' => route('admin.users.index'),
             'route' => 'admin.users.index',
-            'text' => 'Users',
-            'active' => 'admin.users.index',
-            'icon' => 'cog',
+            'text' => 'Customers',
+            'icon_img' => asset('images/icons/user.svg'),
+        ],[
+            'url' => route('admin.users.admins'),
+            'route' => 'admin.users.admins',
+            'text' => 'Admins',
+            'icon_img' => asset('images/icons/user.svg'),
+        ],[
+            'url' => route('admin.settings.index'),
+            'route' => 'admin.settings.index',
+            'text' => 'Settings',
+            'icon_img' => asset('images/icons/Setting.svg'),
         ],
+
 ];
 
 @endphp
 <aside
-    class="fixed  top-0 left-0 z-20 w-60 h-screen pt-14- transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+    class="fixed  top-0 left-0 z-20 w-24 h-screen pt-14- transition-transform -translate-x-full
+    bg-black border-r border-gray-800
+    md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
     aria-label="Sidenav"
     id="drawer-navigation"
 >
@@ -130,75 +76,120 @@
             </div>
         </form>
         <div class="mt-2 mb-4">
-            <Link href="{{ route('admin.dashboard') }}" class="flex w-56 items-center justify-center mr-4-">
+            <Link href="{{ route('admin.dashboard') }}" class="flex w-24 items-center justify-center mr-4-">
             <img
                 src="{{ asset('images/logo.png') }}"
-                class="mx-auto h-10"
+                class="mx-auto h-8"
                 alt="Logo"
             />
             </Link>
         </div>
-        <simplebar data-simplebar-auto-hide="true">
-            <ul class="srcollbar space-y-1 border-b border-1 border-gray-200 dark:border-gray-700 pb-1 " data-simplebar>
+
+            <ul class="srcollbar space-y-1- border-t border-1
+            border-gray-700 dark:border-gray-700 pb-1 " data-simplebar>
                 @foreach($menuArray as $item)
-                    @permission(get_permission($item['route']))
+{{--                    @permission(get_permission($item['route']))--}}
                     @if(isset($item['submenu']))
-                        <li class="border-t border-1 border-gray-200 dark:border-gray-700 px-3">
+                        <li class=" px-3-">
                             <x-splade-toggle :data="is_active($item['submenu'], true) ? true : false">
                                 <button
                                     @click.prevent="toggle"
                                     type="button"
-                                    class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg-
-                                    transition duration-75 group hover:bg-gray-100- dark:text-white dark:hover:bg-gray-700-"
+                                    class="flex items-center p-2 w-full text-base font-semibold
+                                    transition duration-75 group dark:text-white
+                                    hover:rounded-r-3xl
+                                    px-5
+                                    hover:text-blue-500
+                                    dark:hover:bg-gray-700 hover:bg-blue-300
+                                    "
                                 >
-                                    {!! getIcon($item['icon']) !!}
+                                    @if(isset($item['icon_img']))
+                                        <img class=" svgImage h-5 w-5" src="{{ $item['icon_img'] }}" />
+                                    @endif
+                                    @if(isset($item['icon']))
+                                        {!! getIcon($item['icon']) !!}
+                                    @endif
+
+
 
                                      <span
-                                         class="flex-1 ml-3 text-left whitespace-nowrap text-gray-500 dark:text-white">{{ $item['text'] }}</span>
+                                         class="flex-1 ml-3 text-left whitespace-nowrap
+                                         hover:text-blue-700
+                        {{ is_active($item['route']) ? ' text-blue-700' : ' text-gray-500' }}
+                                          dark:text-white">{{ $item['text'] }}</span>
 
-                                    <svg class="w-4 h-4 text-gray-500 transition duration-75
-                    dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <svg class="w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
                                 </button>
                                 <x-splade-transition show="toggled">
-                                    <ul class=" py-1 space-y-1">
+                                    <ul class=" py-1 px-3- space-y-1">
                                         @foreach($item['submenu'] as $i)
-                                            @permission(get_permission($i['route']))
+{{--                                            @permission(get_permission($i['route']))--}}
                                             <li>
                                                 <Link
                                                     href="{{ $i['url'] }}"
-                                                    class="flex items-center p-1 w-full text-base font-medium text-gray-900 rounded-lg- transition duration-75
-                                                    group hover:bg-gray-100- dark:text-white dark:hover:bg-gray-700-"
+                                                    class="flex items-center p-1 w-full text-base font-medium text-gray-900
+                                                     transition duration-75 group
+                                                     dark:text-white
+                                                     hover:rounded-r-3xl
+                                                     px-5
+                                                     hover:text-blue-700
+                                                     dark:hover:bg-gray-700 hover:bg-blue-300
+                        {{ is_active($i['route']) ? 'rounded-r-3xl bg-blue-300 ' : '' }}
+
+                                                     "
                                                 >
                                                 <span
-                                                    class="flex-1 ml-3 text-left whitespace-nowrap text-gray-500 dark:text-white">{{ $i['text'] }}</span>
+                                                    class="flex-1 ml-3
+                                                    hover:text-blue-700
+                                                    text-left whitespace-nowrap
+                        {{ is_active($i['route']) ? ' text-blue-700' : 'text-gray-500' }}
+                                                     dark:text-white">{{ $i['text'] }}</span>
                                                 </Link>
                                             </li>
-                                            @endpermission
+{{--                                            @endpermission--}}
                                         @endforeach
                                     </ul>
                                 </x-splade-transition>
                             </x-splade-toggle>
                         </li>
                     @else
-                        <li class="border-t border-1 border-gray-200 dark:border-gray-700 px-3
-                        {{ is_active($item['active']) ? ' text-white' : '' }}
+                        <li class="hover:rounded-r-3xl-
+                        flex flex-col items-center justify-center
+                        border-b
+                        border-gray-700 dark:border-gray-700
+                         dark:hover:bg-gray-700 hover:bg-gray-800
+                         px-3
+                        {{ is_active($item['route']) ? ' bg-gray-800 text-white' : '' }}
                         ">
                             <Link
-                                active="true"
                                 href="{{ $item['url'] }}"
-                                class="flex items-center p-2 w-full text-base font-medium hover:text-gray-500 text-gray-900  transition
-                                duration-75 group hover:bg-gray-100- dark:text-white dark:hover:bg-gray-700-
-                                       "
+                                class=" justify-center text-center
+                                flex flex-col items-center
+                                p-2 w-full text-base- font-light text-sm hover:text-white  transition
+                                duration-75 group dark:text-white
+                        {{ is_active($item['route']) ? ' text-white' : 'text-gray-500' }}"
                             >
-                            {!! getIcon($item['icon']) !!}
-                            <span
-                                class="flex-1 ml-3 text-left whitespace-nowrap text-gray-500 dark:text-white">{{ $item['text'] }}</span>
+                            @if(isset($item['icon_img']))
+                                <img class="h-5 w-5  align-middle" src="{{ $item['icon_img'] }}" />
+                            @endif
+                            @if(isset($item['icon']))
+                                {!! getIcon($item['icon']) !!}
+                            @endif
+
+                            <p
+                                class="flex-1 mt-1 ml-3- text-left- whitespace-nowrap
+                                hover:text-white
+                        {{ is_active($item['route']) ? ' text-white' : 'text-gray-500' }}
+
+                                 dark:text-white">
+                                {{ $item['text'] }}
+                            </p>
                             </Link>
                         </li>
                     @endif
-                    @endpermission
+{{--                    @endpermission--}}
                 @endforeach
 
 
@@ -570,31 +561,16 @@
                 </li>
             </ul>
             @endsection
-        </simplebar>
 
     </div>
     <div
-        class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20"
+        class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex
+        bg-black dark:bg-gray-800 z-20"
     >
+
         <a
             href="#"
-            class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-            <svg
-                aria-hidden="true"
-                class="w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"
-                ></path>
-            </svg>
-        </a>
-        <a
-            href="#"
-            data-tooltip-target="tooltip-settings"
+
             class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 dark:hover:text-white hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
         >
             <svg
@@ -611,212 +587,6 @@
                 ></path>
             </svg>
         </a>
-        <div
-            id="tooltip-settings"
-            role="tooltip"
-            class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip"
-        >
-            Settings page
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        <button
-            type="button"
-            data-dropdown-toggle="language-dropdown"
-            class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:hover:text-white dark:text-gray-400 hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-            <svg
-                aria-hidden="true"
-                class="h-5 w-5 rounded-full mt-0.5"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 3900 3900"
-            >
-                <path fill="#b22234" d="M0 0h7410v3900H0z"/>
-                <path
-                    d="M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0"
-                    stroke="#fff"
-                    stroke-width="300"
-                />
-                <path fill="#3c3b6e" d="M0 0h2964v2100H0z"/>
-                <g fill="#fff">
-                    <g id="d">
-                        <g id="c">
-                            <g id="e">
-                                <g id="b">
-                                    <path
-                                        id="a"
-                                        d="M247 90l70.534 217.082-184.66-134.164h228.253L176.466 307.082z"
-                                    />
-                                    <use xlink:href="#a" y="420"/>
-                                    <use xlink:href="#a" y="840"/>
-                                    <use xlink:href="#a" y="1260"/>
-                                </g>
-                                <use xlink:href="#a" y="1680"/>
-                            </g>
-                            <use xlink:href="#b" x="247" y="210"/>
-                        </g>
-                        <use xlink:href="#c" x="494"/>
-                    </g>
-                    <use xlink:href="#d" x="988"/>
-                    <use xlink:href="#c" x="1976"/>
-                    <use xlink:href="#e" x="2470"/>
-                </g>
-            </svg>
-        </button>
-        <!-- Dropdown -->
-        <div
-            class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-            id="language-dropdown"
-        >
-            <ul class="py-1" role="none">
-                <li>
-                    <a
-                        href="#"
-                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
-                        role="menuitem"
-                    >
-                        <div class="inline-flex items-center">
-                            <svg
-                                aria-hidden="true"
-                                class="h-3.5 w-3.5 rounded-full mr-2"
-                                xmlns="http://www.w3.org/2000/svg"
-                                id="flag-icon-css-us"
-                                viewBox="0 0 512 512"
-                            >
-                                <g fill-rule="evenodd">
-                                    <g stroke-width="1pt">
-                                        <path
-                                            fill="#bd3d44"
-                                            d="M0 0h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
-                                            transform="scale(3.9385)"
-                                        />
-                                        <path
-                                            fill="#fff"
-                                            d="M0 10h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
-                                            transform="scale(3.9385)"
-                                        />
-                                    </g>
-                                    <path
-                                        fill="#192f5d"
-                                        d="M0 0h98.8v70H0z"
-                                        transform="scale(3.9385)"
-                                    />
-                                    <path
-                                        fill="#fff"
-                                        d="M8.2 3l1 2.8H12L9.7 7.5l.9 2.7-2.4-1.7L6 10.2l.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7L74 8.5l-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 7.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 24.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 21.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 38.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 35.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 52.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 49.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 66.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 63.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9z"
-                                        transform="scale(3.9385)"
-                                    />
-                                </g>
-                            </svg>
-                            English (US)
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="#"
-                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-600"
-                        role="menuitem"
-                    >
-                        <div class="inline-flex items-center">
-                            <svg
-                                aria-hidden="true"
-                                class="h-3.5 w-3.5 rounded-full mr-2"
-                                xmlns="http://www.w3.org/2000/svg"
-                                id="flag-icon-css-de"
-                                viewBox="0 0 512 512"
-                            >
-                                <path fill="#ffce00" d="M0 341.3h512V512H0z"/>
-                                <path d="M0 0h512v170.7H0z"/>
-                                <path fill="#d00" d="M0 170.7h512v170.6H0z"/>
-                            </svg>
-                            Deutsch
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="#"
-                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-600"
-                        role="menuitem"
-                    >
-                        <div class="inline-flex items-center">
-                            <svg
-                                aria-hidden="true"
-                                class="h-3.5 w-3.5 rounded-full mr-2"
-                                xmlns="http://www.w3.org/2000/svg"
-                                id="flag-icon-css-it"
-                                viewBox="0 0 512 512"
-                            >
-                                <g fill-rule="evenodd" stroke-width="1pt">
-                                    <path fill="#fff" d="M0 0h512v512H0z"/>
-                                    <path fill="#009246" d="M0 0h170.7v512H0z"/>
-                                    <path fill="#ce2b37" d="M341.3 0H512v512H341.3z"/>
-                                </g>
-                            </svg>
-                            Italiano
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="#"
-                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
-                        role="menuitem"
-                    >
-                        <div class="inline-flex items-center">
-                            <svg
-                                aria-hidden="true"
-                                class="h-3.5 w-3.5 rounded-full mr-2"
-                                xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
-                                id="flag-icon-css-cn"
-                                viewBox="0 0 512 512"
-                            >
-                                <defs>
-                                    <path
-                                        id="a"
-                                        fill="#ffde00"
-                                        d="M1-.3L-.7.8 0-1 .6.8-1-.3z"
-                                    />
-                                </defs>
-                                <path fill="#de2910" d="M0 0h512v512H0z"/>
-                                <use
-                                    width="30"
-                                    height="20"
-                                    transform="matrix(76.8 0 0 76.8 128 128)"
-                                    xlink:href="#a"
-                                />
-                                <use
-                                    width="30"
-                                    height="20"
-                                    transform="rotate(-121 142.6 -47) scale(25.5827)"
-                                    xlink:href="#a"
-                                />
-                                <use
-                                    width="30"
-                                    height="20"
-                                    transform="rotate(-98.1 198 -82) scale(25.6)"
-                                    xlink:href="#a"
-                                />
-                                <use
-                                    width="30"
-                                    height="20"
-                                    transform="rotate(-74 272.4 -114) scale(25.6137)"
-                                    xlink:href="#a"
-                                />
-                                <use
-                                    width="30"
-                                    height="20"
-                                    transform="matrix(16 -19.968 19.968 16 256 230.4)"
-                                    xlink:href="#a"
-                                />
-                            </svg>
-                            中文 (繁體)
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+
     </div>
 </aside>

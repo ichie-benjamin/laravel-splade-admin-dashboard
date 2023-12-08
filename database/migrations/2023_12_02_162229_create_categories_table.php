@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->boolean('is_featured')->default(0);
             $table->boolean('status')->default(0);
-            $table->string('color')->nullable();
             $table->string('icon')->nullable();
             $table->string('image')->nullable();
             $table->uuid('category_id')->nullable();

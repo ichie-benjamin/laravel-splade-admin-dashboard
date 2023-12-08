@@ -5,6 +5,8 @@ import 'flowbite';
 import Simplebar from 'simplebar-vue';
 import 'simplebar-vue/dist/simplebar.min.css';
 
+import "@protonemedia/laravel-splade/dist/jodit.css";
+
 import VueApexCharts from "vue3-apexcharts";
 
 

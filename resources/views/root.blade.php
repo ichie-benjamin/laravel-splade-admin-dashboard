@@ -24,12 +24,42 @@
             }
         </script>
 
+        <style>
+            .loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: hsl(240deg 7% 62% / 99%);
+                z-index: 9999;
+            }
+            .loader img {
+                width: 150px;
+            }
+        </style>
+
         @spladeHead
     </head>
     <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900">
+    <div class="loader" id="loader">
+        <img src="/images/cpanel-loading.svg" alt="Loading...">
+    </div>
+
+
         @splade
 
+    <script>
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'none';
+        });
+    </script>
     </body>
+
 
 
 </html>

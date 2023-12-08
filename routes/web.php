@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/', function () {
+    return view('home');
+});
+
 Route::middleware('splade')->group(function () {
     // Registers routes to support the interactive components...
     Route::spladeWithVueBridge();
@@ -30,15 +35,13 @@ Route::middleware('splade')->group(function () {
     // Registers routes to support async File Uploads with Filepond...
     Route::spladeUploads();
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+
 
     Route::middleware('auth')->group(function () {
 
 
         Route::get('/dashboard', function () {
-            return view('dashboard');
+            return redirect()->route('admin.dashboard');
         })->name('dashboard');
 
 
@@ -46,16 +49,10 @@ Route::middleware('splade')->group(function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-        Route::group(['prefix' => 'dashboard/'], function () {
-            Route::resource('sites', SiteController::class);
-            Route::post('site/refresh/{id}', [SiteController::class,'refresh'])->name('sites.refresh');
-            Route::get('site/connect/domain/{id}', [SiteController::class,'connectDomain'])->name('sites.connect_domain');
-            Route::post('site/connect/domain/{id}', [SiteController::class,'connectCustomDomain'])->name('sites.connect_domain');
-        });
-
 
     });
 
     require __DIR__.'/auth.php';
     require __DIR__.'/admin.php';
 });
+

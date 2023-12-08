@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,8 @@ class PermissionServices
             if ($routeName && str_starts_with($routeName, 'admin.')) {
                 $permissionFullName = str_replace('.', '-', $routeName);
                 $permissionName = str_replace('admin-', '', $permissionFullName);
+                $permissionName = str_replace('index', 'read', $permissionName);
+                $permissionName = str_replace('destroy', 'delete', $permissionName);
                 $permissions[] = [
                     'name' => $permissionName,
                     'display_name' => str_replace('-', ' ', $permissionName),
@@ -68,7 +71,8 @@ class PermissionServices
         return $permissions;
     }
 
-    public function storeMissingPermissions(){
+    public function storeMissingPermissions(): void
+    {
         $permissions = $this->generatePermissionsByRoute();
         foreach ($permissions as $permissionData) {
             $permissionName = $permissionData['name'];
@@ -76,6 +80,14 @@ class PermissionServices
             if (!$existingPermission) {
                 Permission::create($permissionData);
             }
+        }
+    }
+    public function assignPermissionsToAdmin(): void
+    {
+        $roles = Role::whereIn('name',['admin','superadmin'])->get();
+        $permissions = Permission::pluck('id')->toArray();
+        foreach ($roles as $item) {
+            $item->syncPermissions($permissions);
         }
     }
 }
