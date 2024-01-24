@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
 
-        $this->call(CategoriesSeeder::class);
         $this->call(LaratrustSeeder::class);
         $this->call(PermissionSeeder::class);
 
@@ -25,6 +24,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Super',
                 'last_name' => 'Admin',
                 'email' => 'superdev.cloud@gmail.com',
+                'phone' => '9302939939',
                 'password' => bcrypt('Superdev...')
             ]);
 

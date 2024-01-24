@@ -40,14 +40,21 @@
             .loader img {
                 width: 150px;
             }
+            ol, ul {
+                list-style: none;
+            }
         </style>
 
         @spladeHead
     </head>
-    <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900">
-    <div class="loader" id="loader">
-        <img src="/images/cpanel-loading.svg" alt="Loading...">
-    </div>
+    <body class="dark:dark dark:text-bodydark dark:bg-boxdark-2">
+    <!-- ===== Preloader Start ===== -->
+
+{{--    @include('layouts.partials.preloader')--}}
+
+{{--    <div class="loader" id="loader">--}}
+{{--        <img src="/images/cpanel-loading.svg" alt="Loading...">--}}
+{{--    </div>--}}
 
 
         @splade

@@ -1,11 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex ">
-            <h2 class="dark:text-white text-lg text-gray-800 leading-tight">
-                Website settings
-            </h2>
-        </div>
-
+        Website settings
     </x-slot>
     <x-card>
         <div class="py-4">

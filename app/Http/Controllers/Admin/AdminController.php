@@ -15,6 +15,10 @@ class AdminController extends Controller
 
         $stats = Splade::onLazy(fn () => $statisticsService->getStatistics());
         $recent = Splade::onLazy(fn () => $this->getData());
+        $chart1 = $statisticsService->getChart1();
+        $chart2 = $statisticsService->getChart2();
+        $chart3 = $statisticsService->getChart3();
+        $chart4 = $statisticsService->getChart4();
 
         $chart = [
             'width' => '100%',
@@ -35,15 +39,15 @@ class AdminController extends Controller
                 ],
             ],
         ];
-        return view('admin.dashboard', compact('chart','recent','stats'));
+        return view('admin.dashboard', compact('chart4','chart3','chart2','chart1','chart','recent','stats'));
     }
 
     private function getData(): array
     {
 //        sleep(30);
         return [
-            'recent_posts' => Post::latest()->paginate(10),
-            'popular_posts' => Post::latest()->paginate(10),
+            'recent_posts' => [],
+            'popular_posts' => [],
         ];
     }
 

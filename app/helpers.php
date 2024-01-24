@@ -54,3 +54,11 @@ if (!function_exists('get_permission')) {
         return str_replace('admin-','',str_replace('.','-', $route));
     }
 }
+
+function get_route($route)
+{
+    if(strlen($route) > 2){
+        return route($route);
+    }
+    return '#';
+}

@@ -22,6 +22,7 @@ class User extends Authenticatable implements LaratrustUser
         'first_name',
         'last_name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -30,7 +31,8 @@ class User extends Authenticatable implements LaratrustUser
         'remember_token',
     ];
 
-    public function getNameAttribute(){
+    public function getNameAttribute(): string
+    {
         return $this->first_name.' '.$this->last_name;
     }
 

@@ -1,16 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
-            <h2 class=" text-lg text-gray-800 leading-tight">
-                User Listing
-            </h2>
+{{--        <div class="flex justify-between">--}}
+{{--            <h2 class=" text-lg text-gray-800 leading-tight">--}}
+{{--                User Listing--}}
+{{--            </h2>--}}
 
-            <div class="">
-                <Link class="bg-blue-900 text-white rounded-xl  px-4 py-3" modal  href="{{ route('admin.users.create') }}">
-                Add User
-                </Link>
-            </div>
-        </div>
+{{--            <div class="">--}}
+{{--                <Link class="bg-blue-900 text-white rounded-xl  px-4 py-3" modal  href="{{ route('admin.users.create') }}">--}}
+{{--                Add User--}}
+{{--                </Link>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+        Users
 
     </x-slot>
 
